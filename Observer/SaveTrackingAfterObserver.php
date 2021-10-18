@@ -14,7 +14,7 @@ use Magento\Sales\Model\Order\Shipment;
 /**
  * Sends shipment to Allegro after save shipping event
  */
-class SaveShippingAfterObserver implements ObserverInterface
+class SaveTrackingAfterObserver implements ObserverInterface
 {
     /** @var array */
     private static $availableCarriers = [
@@ -82,7 +82,7 @@ class SaveShippingAfterObserver implements ObserverInterface
         }
 
         /** @var Shipment $shipment */
-        $shipment = $observer->getEvent()->getShipment();
+        $shipment = $observer->getEvent()->getTrack()->getShipment();
 
         $order = $shipment->getOrder();
 
@@ -112,7 +112,7 @@ class SaveShippingAfterObserver implements ObserverInterface
                 $shipmentData['carrierId'] = self::$availableCarriers[$carrierCode];
             } else {
                 $shipmentData['carrierId'] = 'OTHER';
-                $shipmentData['carrierName'] = $carrierCode;
+//                $shipmentData['carrierName'] = $carrierCode;
             }
             $shipmentData['waybill'] = $trackNumber;
 
