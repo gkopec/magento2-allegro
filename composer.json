@@ -1,5 +1,5 @@
 {
-  "name": "macopedia/magento2-allegro",
+  "name": "genius-dev/magento2-allegro",
   "description": "Magento2 module responsible for integration with Allegro API, developed by Macopedia.com",
   "type": "magento2-module",
   "keywords": [
