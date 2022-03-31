@@ -13,6 +13,7 @@ class Configuration
     const TRACKING_NUMBER_SENDING_ENABLED_CONFIG_PATH = 'allegro/order/tracking_number_sending_enabled';
     const DEBUG_MODE_ENABLED_CONFIG_PATH = 'allegro/debug_mode/debug_mode_enabled';
     const EAN_ATTRIBUTE_CONFIG_PATH = 'allegro/offer_create/ean_attribute';
+    const MPN_ATTRIBUTE_CONFIG_PATH = 'allegro/offer_create/mpn_attribute';
     const DESCRIPTION_ATTRIBUTE_CONFIG_PATH = 'allegro/offer_create/description_attribute';
     const PRICE_ATTRIBUTE_CONFIG_PATH = 'allegro/offer_create/price_attribute';
     const STORE_ID_CONFIG_PATH = 'allegro/order/store';
@@ -217,5 +218,17 @@ class Configuration
     public function setInitializationTime($time)
     {
         $this->flagManager->saveFlag(self::INITIALIZATION_TIME_FLAG_NAME, $time);
+    }
+    
+    /**
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return string|null
+     */
+    public function getMpnAttributeCode(
+        string $scopeType = ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
+        ?string $scopeCode = null
+    ): ?string {
+        return $this->scopeConfig->getValue(self::MPN_ATTRIBUTE_CONFIG_PATH, $scopeType, $scopeCode);
     }
 }

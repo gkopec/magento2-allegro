@@ -115,12 +115,14 @@ class CreateDataProvider extends DataProvider
         }
 
         $eanAttributeCode = $this->config->getEanAttributeCode();
+        $mpnAttributeCode = $this->config->getMpnAttributeCode();
         $descriptionAttributeCode = $this->config->getDescriptionAttributeCode();
 
         $this->_loadedData[$product->getId()] = [
             'allegro' => [
                 'product' => $product->getId(),
                 'ean' => $eanAttributeCode ? $product->getData($eanAttributeCode) : '',
+                'mpn' => $mpnAttributeCode ? $product->getData($mpnAttributeCode) : '',
                 'name' => $product->getName(),
                 'description' => $descriptionAttributeCode
                     ? $product->getData($descriptionAttributeCode)
