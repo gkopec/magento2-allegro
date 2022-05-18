@@ -16,6 +16,8 @@ class Invoice extends DataObject implements InvoiceInterface
     /** @var AddressInterfaceFactory */
     private $addressFactory;
 
+    private bool $required;
+
     /**
      * Delivery constructor.
      * @param AddressInterfaceFactory $addressFactory
@@ -48,6 +50,7 @@ class Invoice extends DataObject implements InvoiceInterface
      */
     public function setRawData(array $rawData)
     {
+        $this->setRequired($rawData['required'] ?? false);
         $this->setAddress($this->mapAddressData($rawData['address'] ?? []));
     }
 
@@ -61,5 +64,21 @@ class Invoice extends DataObject implements InvoiceInterface
         $address = $this->addressFactory->create();
         $address->setRawData($data);
         return $address;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequired(): bool
+    {
+        return $this->required;
+    }
+
+    /**
+     * @param bool $required
+     */
+    public function setRequired(bool $required): void
+    {
+        $this->required = $required;
     }
 }
