@@ -113,9 +113,15 @@ class Address extends DataObject implements AddressInterface
         $address->setLastname(
             $this->getNaturalPerson()->getLastName() ?? $deliveryAddress->getLastName() ?? 'unknown'
         );
-        $address->setCompany(
-            $this->getCompany()->getName() ?? $deliveryAddress->getCompanyName()
-        );
+
+        $company = $this->getCompany()->getName() ?? '';
+
+        if($address->getAddressType() != 'billing') {
+            $company = $company ?? $deliveryAddress->getCompanyName();
+        }
+
+        $address->setCompany($company);
+
         $address->setVatId(
             $this->getCompany() ? ($this->getCompany()->getVatId() ?? '') : ''
         );
