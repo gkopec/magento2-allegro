@@ -19,7 +19,7 @@ class HttpRequestHandler extends BaseHandler
      * @param array $record
      * @return bool
      */
-    public function isHandling(array $record)
+    public function isHandling(array $record): bool
     {
         return parent::isHandling($record) && !($record['context'][Logger::IS_EXCEPTION_KEY] ?? false);
     }
