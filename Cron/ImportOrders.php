@@ -45,7 +45,7 @@ class ImportOrders
     public function execute()
     {
         if ($this->scopeConfig->getValue(self::ORDER_IMPORT_CONFIG_KEY)) {
-            $this->logger->addInfo("Cronjob imported orders is executed.");
+            $this->logger->info("Cronjob imported orders is executed.");
             $this->orderImporter->execute();
         }
     }

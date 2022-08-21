@@ -42,7 +42,7 @@ class CleanReservations
     public function execute()
     {
         if ($this->scopeConfig->getValue(self::RESERVATIONS_CRON_CONFIG_KEY)) {
-            $this->logger->addInfo("Cronjob clean reservations is executed.");
+            $this->logger->info("Cronjob clean reservations is executed.");
             $this->allegroReservation->cleanOldReservations();
         }
     }

@@ -39,7 +39,7 @@ class CleanOffersMapping
     public function execute()
     {
         if ($this->scopeConfig->getValue(self::OFFERS_MAPPING_CRON_CONFIG_KEY)) {
-            $this->logger->addInfo("Cronjob clean offers mapping is executed.");
+            $this->logger->info("Cronjob clean offers mapping is executed.");
             try {
                 $this->offersMapping->clean();
             } catch (\Exception $e) {
