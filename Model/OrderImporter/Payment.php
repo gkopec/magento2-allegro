@@ -113,7 +113,7 @@ class Payment
                 return true;
             }
         }
-        $this->logger->addError('Wrong payment method ' . $code);
+        $this->logger->error('Wrong payment method ' . $code);
 
         return false;
     }
