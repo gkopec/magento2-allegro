@@ -25,7 +25,8 @@
     },
     "sales_order_item": {
         "column": {
-            "allegro_line_item_id": true
+            "allegro_line_item_id": true,
+            "allegro_offer_id": true
         }
     },
     "sales_order_pickup_point": {

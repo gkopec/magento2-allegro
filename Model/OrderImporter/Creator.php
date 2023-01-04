@@ -164,7 +164,8 @@ class Creator
         $order->setCanSendNewEmailFlag(false);
 
         foreach ($order->getItems() as $item) {
-            $item->setData('allegro_line_item_id', $lineItemsIds[$item->getSku()]);
+            $item->setData('allegro_line_item_id', $lineItemsIds[$item->getSku()]['id']);
+            $item->setData('allegro_offer_id', $lineItemsIds[$item->getSku()]['offer_id']);
         }
 
         $this->processStatus($order, $checkoutForm);
@@ -225,7 +226,10 @@ class Creator
                 throw new CreatorItemsException("Product for requested offer id {$offerId} does not exist");
             }
 
-            $lineItemsIds[$product->getSku()] = $lineItem->getId();
+            $lineItemsIds[$product->getSku()] = [
+                'id' => $lineItem->getId(),
+                'offer_id' => $offerId
+            ];
             $price = $lineItem->getPrice()->getAmount();
             $product->setPrice($price);
             $request = $this->objectFactory->create(['qty' => $lineItem->getQty(), 'custom_price' => $price]);

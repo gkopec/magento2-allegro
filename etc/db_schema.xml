@@ -23,6 +23,7 @@
 
     <table name="sales_order_item">
         <column xsi:type="varchar" length="255" name="allegro_line_item_id" nullable="true" comment="Allegro line item ID"/>
+        <column xsi:type="varchar" length="255" name="allegro_offer_id" nullable="true" comment="Allegro offer ID"/>
     </table>
 
     <table name="sales_order_pickup_point" resource="default">
