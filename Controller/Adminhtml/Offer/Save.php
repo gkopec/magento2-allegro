@@ -138,6 +138,7 @@ class Save extends Offer
         $offer->setPaymentsInvoice($data['payments_invoice']);
         $offer->setCategory($data['category']);
         $offer->setParameters($this->initializeParameters($data));
+        $offer->setLanguage(\Macopedia\Allegro\Model\Data\Offer::DEFAULT_LANGUAGE);
 
         return $offer;
     }

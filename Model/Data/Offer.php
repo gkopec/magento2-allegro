@@ -32,6 +32,9 @@ class Offer extends DataObject implements OfferInterface
     const PUBLICATION_STATUS_FIELD_NAME = 'publication_status';
     const VALIDATION_ERRORS_FIELD_NAME = 'validation_errors';
     const AFTER_SALES_SERVICES_FIELD_NAME = 'after_sales_services';
+    const LANGUAGE = 'language';
+
+    const DEFAULT_LANGUAGE = "pl-PL";
 
     /** @var ParameterDefinitionRepositoryInterface */
     private $parameterDefinitionRepository;
@@ -369,6 +372,14 @@ class Offer extends DataObject implements OfferInterface
         return count($this->getValidationErrors()) < 1;
     }
 
+    public function setLanguage(string $language) {
+        $this->setData(self::LANGUAGE, $language);
+    }
+    public function getLanguage(): string {
+        return $this->getData(self::LANGUAGE);
+    }
+
+
     /**
      * @param array $rawData
      * @throws \Macopedia\Allegro\Model\Api\ClientException
@@ -414,6 +425,7 @@ class Offer extends DataObject implements OfferInterface
         $this->setLocation($this->mapLocationData($rawData['location'] ?? []));
         $this->setValidationErrors($this->mapValidationErrorsData($rawData['validation']['errors'] ?? []));
         $this->setAfterSalesServices($this->mapAfterSalesServicesData($rawData['afterSalesServices'] ?? []));
+        $this->setLanguage($rawData['language'] ?? self::DEFAULT_LANGUAGE);
     }
 
     /**
@@ -466,7 +478,8 @@ class Offer extends DataObject implements OfferInterface
             'payments' => [
                 'invoice' => $this->getPaymentsInvoice()
             ],
-            'afterSalesServices' => $this->mapAfterSalesServices($this->getAfterSalesServices())
+            'afterSalesServices' => $this->mapAfterSalesServices($this->getAfterSalesServices()),
+            'language' => $this->getLanguage()
         ];
 
         if ($this->getEan() != '') {

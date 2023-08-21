@@ -219,4 +219,7 @@ interface OfferInterface
      * @return array
      */
     public function getRawData(): array;
+
+    public function setLanguage(string $language);
+    public function getLanguage(): string;
 }
