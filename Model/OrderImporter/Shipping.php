@@ -4,8 +4,10 @@ namespace Macopedia\Allegro\Model\OrderImporter;
 
 use Macopedia\Allegro\Api\Data\CheckoutFormInterface;
 use Macopedia\Allegro\Logger\Logger;
+use Macopedia\Allegro\Model\Api\ClientException;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Shipping\Model\Config;
+use Macopedia\Allegro\Model\DeliveryMethodRepository;
 
 /**
  * Shipping model class
@@ -29,6 +31,11 @@ class Shipping
     private $shippingCodes = [];
 
     /**
+     * @var DeliveryMethodRepository
+     */
+    private $deliveryMethodRepository;
+
+    /**
      * @param ScopeConfigInterface $scopeConfig
      * @param Logger $logger
      * @param Config $shippingConfig
@@ -36,11 +43,13 @@ class Shipping
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         Logger $logger,
-        Config $shippingConfig
+        Config $shippingConfig,
+        DeliveryMethodRepository $deliveryMethodRepository
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->logger = $logger;
         $this->shippingConfig = $shippingConfig;
+        $this->deliveryMethodRepository = $deliveryMethodRepository;
     }
 
     /**
@@ -110,5 +119,22 @@ class Shipping
     {
         $defaultMethodCode = $this->scopeConfig->getValue(self::DEFAULT_SHIPPING_METHOD_CONFIG_KEY);
         return $this->validateShippingMethod($defaultMethodCode) ? $defaultMethodCode : self::DEFAULT_SHIPPING_METHOD;
+    }
+
+    public function getShippingMethodName(CheckoutFormInterface $checkoutForm): string
+    {
+        $methodId = $checkoutForm->getDelivery()->getMethod()->getId();
+
+        if ($methodId == '') {
+            return '';
+        }
+
+        try{
+            $deliveryMethod = $this->deliveryMethodRepository->getById($methodId);
+
+            return $deliveryMethod->getName();
+        } catch (ClientException $exception) {
+            return '';
+        }
     }
 }

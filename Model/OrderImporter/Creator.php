@@ -266,8 +266,11 @@ class Creator
         $quote->getShippingAddress()->setCustomerId($quote->getCustomer()->getId());
 
         $shippingMethodCode = $this->shipping->getShippingMethodCode($checkoutForm);
+        $shippingExtInfo = $this->shipping->getShippingMethodName($checkoutForm);
 
-        $quote->getShippingAddress()
+        $quote
+            ->setExtShippingInfo($shippingExtInfo)
+            ->getShippingAddress()
             ->setShippingMethod($shippingMethodCode)
             ->setBaseDiscountAmount(0)
             ->setDiscountAmount(0)

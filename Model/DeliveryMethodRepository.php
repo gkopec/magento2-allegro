@@ -18,6 +18,8 @@ class DeliveryMethodRepository implements DeliveryMethodRepositoryInterface
     /** @var DeliveryMethodInterfaceFactory */
     private $deliveryMethodFactory;
 
+    private $deliveryMethods = null;
+
     /**
      * DeliveryMethodRepository constructor.
      * @param DeliveryMethod $deliveryMethod
@@ -38,9 +40,7 @@ class DeliveryMethodRepository implements DeliveryMethodRepositoryInterface
     public function getList(): array
     {
         try {
-
             $deliveryMethodsData = $this->deliveryMethod->getList();
-
         } catch (ClientResponseException $e) {
             return [];
         }
@@ -54,5 +54,21 @@ class DeliveryMethodRepository implements DeliveryMethodRepositoryInterface
         }
 
         return $deliveryMethods;
+    }
+
+    /**
+     * @param string $id
+     * @return DeliveryMethodInterface
+     * @throws ClientException
+     * @throws ClientResponseException
+     */
+    public function getById(string $id)
+    {
+        $deliveryMethods = $this->getList();
+        if(!isset($deliveryMethods[$id])) {
+            throw new ClientResponseException('Delivery method not found');
+        }
+
+        return $deliveryMethods[$id];
     }
 }
