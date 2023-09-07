@@ -50,7 +50,7 @@ class DeliveryMethodRepository implements DeliveryMethodRepositoryInterface
             /** @var DeliveryMethodInterface $deliveryMethod */
             $deliveryMethod = $this->deliveryMethodFactory->create();
             $deliveryMethod->setRawData($deliveryMethodData);
-            $deliveryMethods[] = $deliveryMethod;
+            $deliveryMethods[$deliveryMethod->getId()] = $deliveryMethod;
         }
 
         return $deliveryMethods;
@@ -60,13 +60,12 @@ class DeliveryMethodRepository implements DeliveryMethodRepositoryInterface
      * @param string $id
      * @return DeliveryMethodInterface
      * @throws ClientException
-     * @throws ClientResponseException
      */
-    public function getById(string $id)
+    public function getById(string $id): DeliveryMethodInterface
     {
         $deliveryMethods = $this->getList();
         if(!isset($deliveryMethods[$id])) {
-            throw new ClientResponseException('Delivery method not found');
+            throw new ClientException('Delivery method not found');
         }
 
         return $deliveryMethods[$id];

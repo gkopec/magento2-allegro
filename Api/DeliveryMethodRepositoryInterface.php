@@ -13,4 +13,11 @@ interface DeliveryMethodRepositoryInterface
      * @throws ClientException
      */
     public function getList(): array;
+
+    /**
+     * @param string $id
+     * @return DeliveryMethodInterface
+     * @throws ClientException
+     */
+    public function getById(string $id): DeliveryMethodInterface;
 }
