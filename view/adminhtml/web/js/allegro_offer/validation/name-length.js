@@ -20,11 +20,11 @@ define([
                 return allegroEscapeList.hasOwnProperty(c) ? allegroEscapeList[c] : c
             }).length;
 
-            if (valueLength > 50) {
+            if (valueLength > 75) {
                 return false
             }
             return true
         },
-        $.mage.__('Maximum name length cannot exceed 50 characters, but some characters are counted as longer: &, "", <, >')
+        $.mage.__('Maximum name length cannot exceed 75 characters, but some characters are counted as longer: &, "", <, >')
     );
 });
