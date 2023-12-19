@@ -60,7 +60,7 @@ class OfferRepository implements OfferRepositoryInterface
         try {
 
             if ($offer->getId()) {
-                $offerRawData = $this->offers->putOffer($offer->getId(), $offerRawData);
+                $offerRawData = $this->offers->patchOffer($offer->getId(), $offerRawData);
             } else {
                 $offerRawData = $this->offers->postOffer($offerRawData);
             }

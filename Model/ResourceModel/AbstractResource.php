@@ -133,6 +133,16 @@ abstract class AbstractResource
     }
 
     /**
+     * @throws ClientResponseException
+     * @throws ClientException
+     * @throws ClientResponseErrorException
+     */
+    protected function requestPatch(string $uri, array $params)
+    {
+        return $this->sendRequest($uri, 'PATCH', $params);
+    }
+
+    /**
      * @param       $uri
      * @param array $params
      * @return Request

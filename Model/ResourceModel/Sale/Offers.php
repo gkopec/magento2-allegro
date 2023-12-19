@@ -46,7 +46,7 @@ class Offers extends AbstractResource
      */
     public function get(string $offerId)
     {
-        return $this->requestGet('/sale/offers/' . $offerId);
+        return $this->requestGet('/sale/product-offers/' . $offerId);
     }
 
     /**
@@ -59,7 +59,12 @@ class Offers extends AbstractResource
      */
     public function putOffer(string $offerId, array $params)
     {
-        return $this->requestPut('/sale/offers/' . $offerId, $params);
+        return $this->patchOffer($offerId, $params);
+    }
+
+    public function patchOffer(string $offerId, array $params)
+    {
+        return $this->requestPatch('/sale/product-offers/' . $offerId, $params);
     }
 
     /**
@@ -71,7 +76,7 @@ class Offers extends AbstractResource
      */
     public function postOffer(array $params)
     {
-        return $this->requestPost('/sale/offers', $params);
+        return $this->requestPost('/sale/product-offers/', $params);
     }
 
     /**

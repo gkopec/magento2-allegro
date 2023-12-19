@@ -34,6 +34,8 @@ class Offer extends DataObject implements OfferInterface
     const AFTER_SALES_SERVICES_FIELD_NAME = 'after_sales_services';
     const LANGUAGE = 'language';
 
+    const STATE_ID = 11323;
+
     const DEFAULT_LANGUAGE = "pl-PL";
 
     /** @var ParameterDefinitionRepositoryInterface */
@@ -439,8 +441,17 @@ class Offer extends DataObject implements OfferInterface
             'category' => [
                 'id' => $this->getCategory(),
             ],
-            'product' => null,
-            'parameters' => $this->mapParameters($this->getParameters()),
+            'productSet' => [[
+                'product' => [
+                    'name' => $this->getName(),
+                    'category' => [
+                        'id' => $this->getCategory(),
+                    ],
+                    'images' => $this->mapImages($this->getImages()),
+                    'parameters' => $this->mapProductParameters($this->getParameters())
+                ]]
+            ],
+            'parameters' => $this->mapOfferParameters($this->getParameters()),
             'description' => [
                 'sections' => [
                     0 => [
@@ -483,7 +494,7 @@ class Offer extends DataObject implements OfferInterface
         ];
 
         if ($this->getEan() != '') {
-            $rawData['ean'] = $this->getEan();
+//            $rawData['ean'] = $this->getEan();
         }
 
         return $rawData;
@@ -516,15 +527,27 @@ class Offer extends DataObject implements OfferInterface
         return $result;
     }
 
+    private function mapProductParameters(array $parameters): array
+    {
+        $result = [];
+        foreach ($parameters as $parameter) {
+            if ($parameter->isValueEmpty() || $parameter->getId() == self::STATE_ID) {
+                continue;
+            }
+            $result[] = $parameter->getRawData();
+        }
+        return $result;
+    }
+
     /**
      * @param ParameterInterface[] $parameters
      * @return array
      */
-    private function mapParameters(array $parameters): array
+    private function mapOfferParameters(array $parameters): array
     {
         $result = [];
         foreach ($parameters as $parameter) {
-            if ($parameter->isValueEmpty()) {
+            if ($parameter->isValueEmpty() || $parameter->getId() !== self::STATE_ID) {
                 continue;
             }
             $result[] = $parameter->getRawData();
@@ -542,7 +565,7 @@ class Offer extends DataObject implements OfferInterface
         foreach ($imagesData as $imageData) {
             /** @var ImageInterface $image */
             $image = $this->imageFactory->create();
-            $image->setRawData($imageData);
+            $image->setRawData([$imageData]);
             $result[] = $image;
         }
         return $result;
@@ -556,7 +579,7 @@ class Offer extends DataObject implements OfferInterface
     {
         $result = [];
         foreach ($images as $image) {
-            $result[] = $image->getRawData();
+            $result[] = $image->getUrl();
         }
         return $result;
     }
