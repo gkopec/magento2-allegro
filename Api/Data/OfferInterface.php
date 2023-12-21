@@ -43,11 +43,12 @@ interface OfferInterface
      */
     public function setCategory(string $category);
 
-    /**
-     * @param \Macopedia\Allegro\Api\Data\ParameterInterface[] $parameters
-     * @return void
-     */
     public function setParameters(array $parameters);
+
+    public function setProductParameters(array $parameters);
+
+    public function setOfferParameters(array $parameters);
+
 
     /**
      * @param float $price
@@ -154,10 +155,10 @@ interface OfferInterface
      */
     public function getCategory(): ?string;
 
-    /**
-     * @return \Macopedia\Allegro\Api\Data\ParameterInterface[]
-     */
     public function getParameters(): ?array;
+
+    public function getProductParameters(): array;
+    public function getOfferParameters(): array;
 
     /**
      * @return float|null

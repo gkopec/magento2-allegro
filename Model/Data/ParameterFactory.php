@@ -48,6 +48,8 @@ class ParameterFactory implements ParameterInterfaceFactoryInterface
     {
         $parameter = $this->create($parameterDefinition->getFrontendType());
         $parameter->setId($parameterDefinition->getId());
+        $parameter->setDescribesProduct($parameterDefinition->getOptions()->getDescribesProduct());
+        
         return $parameter;
     }
 }

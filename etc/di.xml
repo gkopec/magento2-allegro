@@ -22,7 +22,6 @@
     <preference for="Macopedia\Allegro\Api\WarrantyRepositoryInterface" type="Macopedia\Allegro\Model\WarrantyRepository" />
     <preference for="Macopedia\Allegro\Api\OrderLogRepositoryInterface" type="Macopedia\Allegro\Model\OrderLogRepository" />
     <preference for="Macopedia\Allegro\Api\ReservationRepositoryInterface" type="Macopedia\Allegro\Model\ReservationRepository" />
-
     <preference for="Macopedia\Allegro\Api\Data\OfferInterface" type="Macopedia\Allegro\Model\Data\Offer" />
     <preference for="Macopedia\Allegro\Api\Data\Offer\LocationInterface" type="Macopedia\Allegro\Model\Data\Offer\Location" />
     <preference for="Macopedia\Allegro\Api\Data\Offer\AfterSalesServicesInterface" type="Macopedia\Allegro\Model\Data\Offer\AfterSalesServices" />
@@ -30,6 +29,7 @@
     <preference for="Macopedia\Allegro\Api\Data\ParameterDefinitionInterface" type="Macopedia\Allegro\Model\Data\ParameterDefinition" />
     <preference for="Macopedia\Allegro\Api\Data\ParameterDefinition\DictionaryItemInterface" type="Macopedia\Allegro\Model\Data\ParameterDefinition\DictionaryItem" />
     <preference for="Macopedia\Allegro\Api\Data\ParameterDefinition\RestrictionInterface" type="Macopedia\Allegro\Model\Data\ParameterDefinition\Restriction" />
+    <preference for="Macopedia\Allegro\Api\Data\ParameterDefinition\OptionsInterface" type="Macopedia\Allegro\Model\Data\ParameterDefinition\Options" />
     <preference for="Macopedia\Allegro\Api\Data\ParameterInterface" type="Macopedia\Allegro\Model\Data\Parameter" />
     <preference for="Macopedia\Allegro\Api\Data\ParameterInterfaceFactoryInterface" type="Macopedia\Allegro\Model\Data\ParameterFactory" />
     <preference for="Macopedia\Allegro\Api\Data\Parameter\RangeInterface" type="Macopedia\Allegro\Model\Data\Parameter\Range" />

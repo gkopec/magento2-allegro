@@ -31,4 +31,8 @@ interface ParameterInterface
      * @return bool
      */
     public function isValueEmpty(): bool;
+    
+    public function setDescribesProduct(bool $value);
+    
+    public function getDescribesProduct(): bool;
 }

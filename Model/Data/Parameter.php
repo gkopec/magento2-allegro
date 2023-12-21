@@ -10,6 +10,7 @@ abstract class Parameter extends DataObject implements ParameterInterface
 {
 
     const ID_FIELD_NAME = 'id';
+    const DESCRIBES_PRODUCT = 'describes_product';
 
     /**
      * @param int $id
@@ -52,5 +53,15 @@ abstract class Parameter extends DataObject implements ParameterInterface
             $result[] = $value;
         }
         return $result;
+    }
+
+    public function setDescribesProduct(bool $value)
+    {
+        $this->setData(self::DESCRIBES_PRODUCT, $value);
+    }
+
+    public function getDescribesProduct():bool
+    {
+        return $this->getData(self::DESCRIBES_PRODUCT);
     }
 }

@@ -5,6 +5,8 @@ namespace Macopedia\Allegro\Model\Data;
 
 use Macopedia\Allegro\Api\Data\ParameterDefinition\DictionaryItemInterface;
 use Macopedia\Allegro\Api\Data\ParameterDefinition\DictionaryItemInterfaceFactory;
+use Macopedia\Allegro\Api\Data\ParameterDefinition\OptionsInterface;
+use Macopedia\Allegro\Api\Data\ParameterDefinition\OptionsInterfaceFactory;
 use Macopedia\Allegro\Api\Data\ParameterDefinition\RestrictionInterface;
 use Macopedia\Allegro\Api\Data\ParameterDefinition\RestrictionInterfaceFactory;
 use Macopedia\Allegro\Api\Data\ParameterDefinitionInterface;
@@ -21,23 +23,15 @@ class ParameterDefinition extends DataObject implements ParameterDefinitionInter
     const TYPE_FIELD_NAME = 'type';
     const DICTIONARY_FIELD_NAME = 'dictionary';
     const RESTRICTIONS_FIELD_NAME = 'restrictions';
-
-    /** @var DictionaryItemInterfaceFactory */
-    private $dictionaryItemFactory;
-
-    /** @var RestrictionInterfaceFactory */
-    private $restrictionFactory;
-
-    /**
-     * ParameterDefinition constructor.
-     * @param DictionaryItemInterfaceFactory $dictionaryItemFactory
-     */
+    const OPTIONS_FIELD_NAME = 'options';
+    
     public function __construct(
-        DictionaryItemInterfaceFactory $dictionaryItemFactory,
-        RestrictionInterfaceFactory $restrictionFactory
+        private DictionaryItemInterfaceFactory $dictionaryItemFactory,
+        private RestrictionInterfaceFactory $restrictionFactory,
+        private OptionsInterfaceFactory $optionsFactory,
+    
     ) {
-        $this->dictionaryItemFactory = $dictionaryItemFactory;
-        $this->restrictionFactory = $restrictionFactory;
+        
     }
 
     /**
@@ -102,6 +96,11 @@ class ParameterDefinition extends DataObject implements ParameterDefinitionInter
     {
         $this->setData(self::RESTRICTIONS_FIELD_NAME, $restrictions);
     }
+    
+    public function setOptions(OptionsInterface $options)
+    {
+        $this->setData(self::OPTIONS_FIELD_NAME, $options);
+    }
 
     /**
      * @return string
@@ -157,6 +156,11 @@ class ParameterDefinition extends DataObject implements ParameterDefinitionInter
     public function getRestrictions(): array
     {
         return $this->getData(self::RESTRICTIONS_FIELD_NAME);
+    }
+    
+    public function getOptions(): OptionsInterface
+    {
+        return $this->getData(self::OPTIONS_FIELD_NAME);
     }
 
     /**
@@ -224,6 +228,7 @@ class ParameterDefinition extends DataObject implements ParameterDefinitionInter
         $this->setRequired($rawData['required'] ?? false);
         $this->setRestrictions($this->mapRestrictionsData($rawData['restrictions'] ?? []));
         $this->setDictionary($this->mapDictionaryData($rawData['dictionary'] ?? []));
+        $this->setOptions($this->mapOptionsData($rawData['options']));
     }
 
     /**
@@ -257,5 +262,14 @@ class ParameterDefinition extends DataObject implements ParameterDefinitionInter
             $restrictions[] = $restriction;
         }
         return $restrictions;
+    }
+
+    private function mapOptionsData(array $data): OptionsInterface
+    {
+        /** @var OptionsInterface $optionsFactory */
+        $options = $this->optionsFactory->create();
+        $options->setRawData($data);
+
+        return $options;
     }
 }

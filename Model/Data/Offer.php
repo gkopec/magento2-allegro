@@ -23,7 +23,8 @@ class Offer extends DataObject implements OfferInterface
     const QTY_FIELD_NAME = 'qty';
     const PRICE_FIELD_NAME = 'price';
     const CATEGORY_FIELD_NAME = 'category';
-    const PARAMETERS_FIELD_NAME = 'parameters';
+    const PRODUCT_PARAMETERS_FIELD_NAME = 'product_parameters';
+    const OFFER_PARAMETERS_FIELD_NAME = 'offer_parameters';
     const IMAGES_FIELD_NAME = 'images';
     const LOCATION_FIELD_NAME = 'location';
     const DELIVERY_SHIPPING_RATES_ID_FIELD_NAME = 'delivery_shipping_rates_id';
@@ -133,13 +134,58 @@ class Offer extends DataObject implements OfferInterface
         $this->setData(self::PRICE_FIELD_NAME, $price);
     }
 
-    /**
-     * @param ParameterInterface[] $parameters
-     * @return void
-     */
-    public function setParameters(array $parameters)
+    public function setParameters($parameters) {
+        /* @var $parameter ParameterInterface */
+        foreach ($parameters as $parameter) {
+            if($parameter->getDescribesProduct()) {
+                $this->setProductParameter($parameter);
+            } else {
+                $this->setOfferParameter($parameter);
+            }
+        }
+    }
+
+    public function setProductParameter($parameter)
     {
-        $this->setData(self::PARAMETERS_FIELD_NAME, $parameters);
+        $parameters = $this->getProductParameters();
+        $parameters[] = $parameter;
+        $this->setProductParameters($parameters);
+
+        return $this;
+    }
+
+    public function setProductParameters(array $parameters)
+    {
+        $this->setData(self::PRODUCT_PARAMETERS_FIELD_NAME, $parameters);
+    }
+
+    public function getProductParameters(): array
+    {
+        return $this->getData(self::PRODUCT_PARAMETERS_FIELD_NAME) ?? [];
+    }
+
+    public function setOfferParameter($parameter)
+    {
+        $parameters = $this->getOfferParameters();
+        $parameters[] = $parameter;
+        $this->setOfferParameters($parameters);
+
+        return $this;
+    }
+
+    public function getOfferParameters(): array
+    {
+        return $this->getData(self::OFFER_PARAMETERS_FIELD_NAME) ?? [];
+    }
+
+    public function getParameters(): array
+    {
+        return array_merge($this->getProductParameters(), $this->getOfferParameters());
+    }
+
+    public function setOfferParameters(array $parameters)
+    {
+        $this->setData(self::OFFER_PARAMETERS_FIELD_NAME, $parameters);
     }
 
     /**
@@ -262,14 +308,6 @@ class Offer extends DataObject implements OfferInterface
     public function getPrice(): ?float
     {
         return $this->getData(self::PRICE_FIELD_NAME);
-    }
-
-    /**
-     * @return ParameterInterface[]
-     */
-    public function getParameters(): array
-    {
-        return (array)$this->getData(self::PARAMETERS_FIELD_NAME);
     }
 
     /**
@@ -421,8 +459,15 @@ class Offer extends DataObject implements OfferInterface
         if (isset($rawData['payments']['invoice'])) {
             $this->setPaymentsInvoice($rawData['payments']['invoice']);
         }
+        
+        $parameters = $rawData['parameters'] ?? [];
+        if (isset($rawData['productSet'])) {
+            foreach ($rawData['productSet'] as $productSet) {
+                $parameters = array_merge($parameters, $productSet['product']['parameters'] ?? []);
+            }
+        }
 
-        $this->setParameters($this->mapParametersData($rawData['parameters'] ?? []));
+        $this->setParameters($this->mapParametersData($parameters));
         $this->setImages($this->mapImagesData($rawData['images'] ?? []));
         $this->setLocation($this->mapLocationData($rawData['location'] ?? []));
         $this->setValidationErrors($this->mapValidationErrorsData($rawData['validation']['errors'] ?? []));
@@ -448,10 +493,10 @@ class Offer extends DataObject implements OfferInterface
                         'id' => $this->getCategory(),
                     ],
                     'images' => $this->mapImages($this->getImages()),
-                    'parameters' => $this->mapProductParameters($this->getParameters())
+                    'parameters' => $this->mapParameters($this->getProductParameters())
                 ]]
             ],
-            'parameters' => $this->mapOfferParameters($this->getParameters()),
+            'parameters' => $this->mapParameters($this->getOfferParameters()),
             'description' => [
                 'sections' => [
                     0 => [
@@ -527,27 +572,11 @@ class Offer extends DataObject implements OfferInterface
         return $result;
     }
 
-    private function mapProductParameters(array $parameters): array
+    private function mapParameters(array $parameters): array
     {
         $result = [];
         foreach ($parameters as $parameter) {
-            if ($parameter->isValueEmpty() || $parameter->getId() == self::STATE_ID) {
-                continue;
-            }
-            $result[] = $parameter->getRawData();
-        }
-        return $result;
-    }
-
-    /**
-     * @param ParameterInterface[] $parameters
-     * @return array
-     */
-    private function mapOfferParameters(array $parameters): array
-    {
-        $result = [];
-        foreach ($parameters as $parameter) {
-            if ($parameter->isValueEmpty() || $parameter->getId() !== self::STATE_ID) {
+            if ($parameter->isValueEmpty()) {
                 continue;
             }
             $result[] = $parameter->getRawData();
