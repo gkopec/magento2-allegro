@@ -43,10 +43,22 @@ interface OfferInterface
      */
     public function setCategory(string $category);
 
+    /**
+     * @param array $parameters
+     * @return mixed
+     */
     public function setParameters(array $parameters);
 
+    /**
+     * @param array $parameters
+     * @return mixed
+     */
     public function setProductParameters(array $parameters);
 
+    /**
+     * @param array $parameters
+     * @return mixed
+     */
     public function setOfferParameters(array $parameters);
 
 
@@ -155,9 +167,19 @@ interface OfferInterface
      */
     public function getCategory(): ?string;
 
+    /**
+     * @return array|null
+     */
     public function getParameters(): ?array;
 
+    /**
+     * @return array
+     */
     public function getProductParameters(): array;
+
+    /**
+     * @return array
+     */
     public function getOfferParameters(): array;
 
     /**
@@ -221,6 +243,14 @@ interface OfferInterface
      */
     public function getRawData(): array;
 
+    /**
+     * @param string $language
+     * @return mixed
+     */
     public function setLanguage(string $language);
+
+    /**
+     * @return string
+     */
     public function getLanguage(): string;
 }

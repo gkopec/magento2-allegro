@@ -31,8 +31,15 @@ interface ParameterInterface
      * @return bool
      */
     public function isValueEmpty(): bool;
-    
+
+    /**
+     * @param bool $value
+     * @return mixed
+     */
     public function setDescribesProduct(bool $value);
-    
+
+    /**
+     * @return bool
+     */
     public function getDescribesProduct(): bool;
 }

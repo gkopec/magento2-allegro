@@ -56,7 +56,11 @@ interface ParameterDefinitionInterface
      * @return void
      */
     public function setRestrictions(array $restrictions);
-    
+
+    /**
+     * @param OptionsInterface $options
+     * @return mixed
+     */
     public function setOptions(OptionsInterface $options);
 
     /**
@@ -98,7 +102,10 @@ interface ParameterDefinitionInterface
      * @return \Macopedia\Allegro\Api\Data\ParameterDefinition\RestrictionInterface[]
      */
     public function getRestrictions(): array;
-    
+
+    /**
+     * @return OptionsInterface
+     */
     public function getOptions(): OptionsInterface;
 
     /**
