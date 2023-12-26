@@ -2,8 +2,6 @@
 
 namespace Macopedia\Allegro\Api\Data;
 
-use Macopedia\Allegro\Api\Data\ParameterDefinition\OptionsInterface;
-
 interface ParameterDefinitionInterface
 {
     const TYPE_INTEGER = 'integer';
@@ -58,12 +56,6 @@ interface ParameterDefinitionInterface
     public function setRestrictions(array $restrictions);
 
     /**
-     * @param OptionsInterface $options
-     * @return mixed
-     */
-    public function setOptions(OptionsInterface $options);
-
-    /**
      * @return string
      */
     public function getId(): ?string;
@@ -102,11 +94,6 @@ interface ParameterDefinitionInterface
      * @return \Macopedia\Allegro\Api\Data\ParameterDefinition\RestrictionInterface[]
      */
     public function getRestrictions(): array;
-
-    /**
-     * @return OptionsInterface
-     */
-    public function getOptions(): OptionsInterface;
 
     /**
      * @param string $type
