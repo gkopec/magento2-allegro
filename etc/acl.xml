@@ -6,8 +6,15 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Macopedia_Allegro::config_macopedia_allegro" title="Allegro"/>
+                            <resource id="Macopedia_Allegro::config_macopedia_allegro" title="Allegro Config"/>
                         </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Sales::sales">
+                    <resource id="Macopedia_Allegro::allegro" title="Allegro" sortOrder="20" translate="title">
+                        <resource id="Macopedia_Allegro::orders_with_errors" sortOrder="10" title="Allegro: orders with errors" translate="title" />
+                        <resource id="Macopedia_Allegro::reservations" sortOrder="20" title="Allegro: reservations" translate="title" />
+                        <resource id="Macopedia_Allegro::offer" sortOrder="30" title="Allegro: offer create/edit" translate="title" />
                     </resource>
                 </resource>
             </resource>

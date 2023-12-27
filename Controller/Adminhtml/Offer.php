@@ -25,6 +25,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 abstract class Offer extends Action
 {
 
+    const ADMIN_RESOURCE = 'Macopedia_Allegro::offer';
     /** @var Credentials */
     protected $credentials;
 

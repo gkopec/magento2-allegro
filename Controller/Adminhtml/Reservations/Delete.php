@@ -22,6 +22,8 @@ use Macopedia\Allegro\Model\OrderImporter\AllegroReservation;
  */
 class Delete extends Action
 {
+    const ADMIN_RESOURCE = 'Macopedia_Allegro::reservations';
+
     /** @var Logger */
     private $logger;
 
