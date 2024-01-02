@@ -7,6 +7,7 @@ define([
     return Input.extend({
 
         loading: ko.observable(false),
+        errorMessage: ko.observable(''),
         products: ko.observableArray([]),
 
         initialize: function () {
@@ -33,6 +34,9 @@ define([
                         self._showSpinner();
                     },
                     success: function (response) {
+                        if(!response || !response.length){
+                            self.errorMessage('No product has been found');
+                        }
                         $.each(response, function (k, product) {
                             self.products.push(product);
                         });
