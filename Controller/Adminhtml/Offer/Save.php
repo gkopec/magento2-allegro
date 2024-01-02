@@ -126,6 +126,9 @@ class Save extends Offer
         if (isset($data['images'])) {
             $offer->setImages($this->initializeImages($data['images']));
         }
+        if (isset($data['allegro_product'])) {
+            $offer->setAllegroProductId($data['allegro_product']);
+        }
 
         $offer->setName($data['name']);
         $offer->setEan($data['ean']);
@@ -138,6 +141,7 @@ class Save extends Offer
         $offer->setPaymentsInvoice($data['payments_invoice']);
         $offer->setCategory($data['category']);
         $offer->setParameters($this->initializeParameters($data));
+        $offer->setPublicationStatus($data['publication']);
         $offer->setLanguage(\Macopedia\Allegro\Model\Data\Offer::DEFAULT_LANGUAGE);
 
         return $offer;

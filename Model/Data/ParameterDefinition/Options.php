@@ -72,7 +72,7 @@ class Options extends DataObject implements OptionsInterface
 
     public function getDescribesProduct(): bool
     {
-        return $this->getData(self::DESCRIBES_PRODUCT);
+        return $this->getData(self::DESCRIBES_PRODUCT) ?? false;
     }
 
     public function getCustomValuesEnabled(): bool

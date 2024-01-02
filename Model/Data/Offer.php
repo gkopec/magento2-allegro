@@ -34,8 +34,7 @@ class Offer extends DataObject implements OfferInterface
     const VALIDATION_ERRORS_FIELD_NAME = 'validation_errors';
     const AFTER_SALES_SERVICES_FIELD_NAME = 'after_sales_services';
     const LANGUAGE = 'language';
-
-    const STATE_ID = 11323;
+    const ALLEGRO_PRODUCT_ID = 'allegro_product_id';
 
     const DEFAULT_LANGUAGE = "pl-PL";
 
@@ -535,11 +534,15 @@ class Offer extends DataObject implements OfferInterface
                 'invoice' => $this->getPaymentsInvoice()
             ],
             'afterSalesServices' => $this->mapAfterSalesServices($this->getAfterSalesServices()),
-            'language' => $this->getLanguage()
+            'language' => $this->getLanguage(),
+            'publication' => [
+                'status' => $this->getPublicationStatus()
+            ]
         ];
 
-        if ($this->getEan() != '') {
-//            $rawData['ean'] = $this->getEan();
+        if ($this->getAllegroProductId()) {
+            $rawData['productSet'][0]['product']['id'] = $this->getAllegroProductId();
+            unset($rawData['productSet'][0]['product']['parameters']);
         }
 
         return $rawData;
@@ -666,5 +669,22 @@ class Offer extends DataObject implements OfferInterface
     private function mapAfterSalesServices(AfterSalesServicesInterface $afterSalesServices): ?array
     {
         return $afterSalesServices->getRawData();
+    }
+
+    /**
+     * @param string $id
+     * @return void
+     */
+    public function setAllegroProductId(string $id): void
+    {
+        $this->setData(self::ALLEGRO_PRODUCT_ID, $id);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAllegroProductId(): ?string
+    {
+        return $this->getData(self::ALLEGRO_PRODUCT_ID);
     }
 }

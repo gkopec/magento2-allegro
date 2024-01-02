@@ -1,0 +1,47 @@
+<div style="display: flex; align-items: center; gap:10px;">
+<input class="admin__control-text" type="text"
+    data-bind="
+        event: {change: userChanges},
+        value: value,
+        hasFocus: focused,
+        valueUpdate: valueUpdate,
+        attr: {
+            name: inputName,
+            placeholder: placeholder,
+            'aria-describedby': noticeId,
+            id: uid,
+            disabled: disabled,
+            maxlength: 255
+    }"/>
+    <!-- ko if: loading -->
+
+    <div data-role="spinner">
+        <div class="spinner">
+            <span/><span/><span/><span/><span/><span/><span/><span/>
+        </div>
+    </div>
+
+    <!-- /ko -->
+    <!-- ko ifnot: loading -->
+    <button type="button" class="button primary" style="white-space: nowrap;" title="Look for product" data-bind="click: checkProduct">
+        <span>Search in Allegro catalog</span>
+    </button>
+    <div></div>
+    <!-- /ko -->
+</div>
+<!-- ko if: products -->
+<div>
+    <!-- ko foreach: products -->
+    <label style="display: flex; gap: 10px; align-items: center">
+        <input type="radio" name="allegro_product" data-bind="value: id, checked: $parent.radioCheck()"></input>
+        <img data-bind="attr: { src: image }" style="max-width: 100px"></img>
+        <div>
+            <strong data-bind="text: name"></strong><br />
+            <!-- ko foreach: parameters -->
+                <span data-bind="text: label"></span>: <span data-bind="text: value"></span> <br />
+            <!-- /ko -->
+        </div>
+    </label>
+    <!-- /ko -->
+</div>
+<!-- /ko -->

@@ -253,4 +253,15 @@ interface OfferInterface
      * @return string
      */
     public function getLanguage(): string;
+
+    /**
+    * @param string $id
+    * @return void
+    */
+    public function setAllegroProductId(string $id): void;
+
+        /**
+     * @return string|null
+     */
+    public function getAllegroProductId(): ?string;
 }

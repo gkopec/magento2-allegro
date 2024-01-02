@@ -92,6 +92,17 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="component" xsi:type="string">Macopedia_Allegro/js/allegro_offer/form/field/ean</item>
+                    <item name="elementTmpl" xsi:type="string">Macopedia_Allegro/allegro_offer/form/field/ean</item>
+                </item>
+            </argument>
+        </field>
+        <field name="allegro_product">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Allegro Product</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
                 </item>
             </argument>
         </field>
@@ -246,6 +257,17 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Attributes</item>
                     <item name="formElement" xsi:type="string">input</item>
+                </item>
+            </argument>
+        </field>
+        <field name="publication">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Macopedia\Allegro\Model\Config\Source\Publication</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Publication Type</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
                 </item>
             </argument>
         </field>

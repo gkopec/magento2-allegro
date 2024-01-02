@@ -174,4 +174,9 @@ class ProductRepository extends \Magento\Catalog\Model\ProductRepository impleme
 
         return null;
     }
+
+    public function getCatalogProduct($data)
+    {
+
+    }
 }

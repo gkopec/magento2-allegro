@@ -55,13 +55,22 @@ abstract class Parameter extends DataObject implements ParameterInterface
         return $result;
     }
 
-    public function setDescribesProduct(bool $value)
+
+    /**
+     * @param bool $value
+     * @return void
+     */
+    public function setDescribesProduct(bool $value): void
     {
         $this->setData(self::DESCRIBES_PRODUCT, $value);
     }
 
-    public function getDescribesProduct():bool
+    /**
+     * @return bool
+     */
+    public function getDescribesProduct(): bool
     {
         return $this->getData(self::DESCRIBES_PRODUCT);
     }
+
 }
