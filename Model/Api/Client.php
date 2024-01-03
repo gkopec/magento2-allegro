@@ -77,7 +77,8 @@ class Client
             $json = $this->sendHttpRequest($token, $request);
         } catch (GuzzleException $e) {
             $this->logger->exception($e);
-            throw new ClientResponseException(__('Error while receiving response from Allegro API'), $e, $e->getCode());
+            $errorMessage = $e->getResponse()->getBody()->getContents();
+            throw new ClientResponseException(__($errorMessage), $e, $e->getCode());
         }
         $response = $this->json->unserialize($json);
 

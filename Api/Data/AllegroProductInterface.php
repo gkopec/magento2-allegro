@@ -54,4 +54,26 @@ interface AllegroProductInterface
      * @return \Macopedia\Allegro\Api\Data\AllegroProduct\ParameterInterface[]
      */
     public function getParameters(): array;
+
+    /**
+     * @param string $category
+     * @return void
+     */
+    public function setCategory(string $category): void;
+
+    /**
+     * @return string
+     */
+    public function getCategory(): string;
+
+    /**
+     * @param string $parametersJson
+     * @return void
+     */
+    public function setParametersJson(string $parametersJson): void;
+
+    /**
+     * @return string
+     */
+    public function getParametersJson(): string;
 }

@@ -540,11 +540,6 @@ class Offer extends DataObject implements OfferInterface
             ]
         ];
 
-        if ($this->getAllegroProductId()) {
-            $rawData['productSet'][0]['product']['id'] = $this->getAllegroProductId();
-            unset($rawData['productSet'][0]['product']['parameters']);
-        }
-
         return $rawData;
     }
 

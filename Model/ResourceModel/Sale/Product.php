@@ -13,4 +13,11 @@ class Product extends AbstractResource
 
         return $response['products'] ?? [];
     }
+
+    public function get(string $id)
+    {
+        $response = $this->requestGet('/sale/products/'. $id);
+
+        return $response['products'] ?? [];
+    }
 }

@@ -48,4 +48,13 @@ class AllegroProductRepository implements AllegroProductRepositoryInterface
 
         return $result;
     }
+
+    /**
+     * @param string $id
+     * @return array|mixed
+     */
+    public function getById(string $id)
+    {
+        return $this->resourceProduct->get($id);
+    }
 }

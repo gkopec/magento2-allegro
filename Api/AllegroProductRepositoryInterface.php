@@ -13,4 +13,10 @@ interface AllegroProductRepositoryInterface
      * @throws ClientException
      */
     public function searchByGtin(string $gtin);
+
+    /**
+     * @param string $id
+     * @return array|mixed
+     */
+    public function getById(string $id);
 }

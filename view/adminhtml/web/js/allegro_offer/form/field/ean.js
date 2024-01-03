@@ -1,14 +1,16 @@
 define([
     'jquery',
     'ko',
+    'uiRegistry',
     'Magento_Ui/js/form/element/abstract',
-    'Macopedia_Allegro/js/allegro_offer/validation/ean'
-], function ($, ko, Input) {
+    'Macopedia_Allegro/js/allegro_offer/validation/ean',
+], function ($, ko, uiRegistry, Input) {
     return Input.extend({
 
         loading: ko.observable(false),
         errorMessage: ko.observable(''),
         products: ko.observableArray([]),
+        selectedProduct: ko.observable(''),
 
         initialize: function () {
             this._super();
@@ -24,6 +26,7 @@ define([
         checkProduct: function () {
             this.validate();
             this.products.removeAll();
+            this.errorMessage('');
             if(!this.checkInvalid() && this.value().length) {
                 let self = this;
                 $.ajax({
@@ -64,11 +67,18 @@ define([
             this.loading(this.loading()-1);
         },
 
-        radioCheck: function () {
-            let val = $('input[name="allegro_product"]:checked').val();
-            if(val) {
-                $('input[name="allegro[allegro_product]"]').val(val).change();
+        productClick: function (product, event) {
+            let ean = uiRegistry.get('index = ean');
+            if(ean.selectedProduct() == product.id) {
+                return;
             }
+            ean.selectedProduct(product.id);
+            $(event.currentTarget).find('[name="allegro_product"]').prop('checked', true);
+            let cat = uiRegistry.get('index = category');
+            let par = uiRegistry.get('index = parameters');
+            par.value(JSON.parse(product.parameters_json));
+            cat.initialValue = product.category;
+            cat._initializeValue();
         }
     });
 });

@@ -2,6 +2,7 @@
 
 namespace Macopedia\Allegro\Model\Data;
 
+use Composer\Util\Url;
 use Macopedia\Allegro\Api\Data\AllegroProduct\ParameterInterfaceFactory;
 use Magento\Framework\DataObject;
 use Macopedia\Allegro\Api\Data\AllegroProductInterface;
@@ -36,6 +37,8 @@ class AllegroProduct extends DataObject implements AllegroProductInterface
      *
      */
     const PARAMETERS = 'parameters';
+    const PARAMETERS_JSON = 'parameters_json';
+    const CATEGORY = 'category';
 
     /**
      * @param array $data
@@ -44,22 +47,35 @@ class AllegroProduct extends DataObject implements AllegroProductInterface
     public function setRawData($data): void
     {
         if (isset($data['id'])) {
-            $this->setData(self::ID, $data['id']);
+            $this->setId($data['id']);
         }
         if (isset($data['name'])) {
             $this->setName($data['name']);
         }
+        if (isset($data['category'])) {
+            $this->setCategory($data['category']['id']);
+        }
         if (isset($data['images'])) {
             $image = $data['images'][0];
-            $this->setData(self::IMAGE, $image['url']);
+            $this->setImage($image['url']);
         }
         if (isset($data['parameters'])) {
             $parameters = $this->getParametersFromRaw($data['parameters']);
             $this->setParameters($parameters);
+            $this->setParametersJson($this->getParametersForJson($data['parameters']));
         }
-
     }
 
+    private function getParametersForJson($parametersData)
+    {
+        $parameters = [];
+
+        foreach ($parametersData as $parameterData) {
+            $parameters[$parameterData['id']] = $parameterData['valuesIds'] ?? $parameterData['values'];
+        }
+
+        return json_encode($parameters);
+    }
     /**
      * @param array $parametersData
      * @return ParameterInterface[]
@@ -148,5 +164,39 @@ class AllegroProduct extends DataObject implements AllegroProductInterface
     public function getParameters(): array
     {
         return $this->getData(self::PARAMETERS) ?? [];
+    }
+
+    /**
+     * @param string $category
+     * @return void
+     */
+    public function setCategory(string $category): void
+    {
+        $this->setData(self::CATEGORY, $category);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategory(): string
+    {
+        return $this->getData(self::CATEGORY) ?? '';
+    }
+
+    /**
+     * @param string $parametersJson
+     * @return void
+     */
+    public function setParametersJson(string $parametersJson): void
+    {
+        $this->setData(self::PARAMETERS_JSON, $parametersJson);
+    }
+
+    /**
+     * @return string
+     */
+    public function getParametersJson(): string
+    {
+        return $this->getData(self::PARAMETERS_JSON) ?? '';
     }
 }

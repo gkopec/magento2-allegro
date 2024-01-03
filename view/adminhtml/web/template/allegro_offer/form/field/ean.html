@@ -32,13 +32,13 @@
 <!-- ko if: products -->
 <div>
     <!-- ko foreach: products -->
-    <label style="display: flex; gap: 10px; align-items: center">
-        <input type="radio" name="allegro_product" data-bind="value: id, checked: $parent.radioCheck()"></input>
+    <label style="display: flex; gap: 10px; align-items: center; cursor: pointer; padding: 15px;" data-bind="click: $parent.productClick">
+        <input type="radio" name="allegro_product"></input>
         <img data-bind="attr: { src: image }" style="max-width: 100px"></img>
         <div>
             <strong data-bind="text: name"></strong><br />
             <!-- ko foreach: parameters -->
-            <span data-bind="text: label"></span>: <span data-bind="text: value"></span> <br />
+            <span data-bind="text: label"></span>: <i data-bind="text: value"></i> <br />
             <!-- /ko -->
         </div>
     </label>
